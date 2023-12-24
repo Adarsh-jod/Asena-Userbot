@@ -1,0 +1,54 @@
+const { bot, getBuffer, jidToNum, genThumbnail } = require('../lib/')
+const image = 'https://i.imgur.com/a/gdeCu3N //MAIN IMAGE URL HERE
+const logo = 'https://telegra.ph/file/b1a153ed50e122440e8bb.jpg'
+
+bot(
+	{
+		pattern: 'intro ?(.*)',
+		fromMe: true,
+		desc: 'Shows My Intro',
+		type: 'misc',
+	},   async (message, match) => {
+        const jid = message.jid
+        const number = message.client.user.jid
+        const thumb = await getBuffer(image)
+        const thumbnail = await getBuffer(logo)
+        const viz = {}
+        // ADDED /* TO REMOVE LINK PREVIEW TYPE
+        .linkPreview = {
+               renderLargerThumbnail: false,
+               showAdAttribution: true,
+               head: "ɪͥᴛͭsᷤ ᴍͫᴇͤ ⏤͟͞ꪶ αdαrѕh ꫂ⛧͢",
+               body: "ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ᴳᵉᵗ🫂 !",
+               mediaType: 1,
+               thumbnail: thumb.buffer,
+               sourceUrl: "http://wa.me/919526433047?text=_៚ʜᴇʟʟᴏ+ᴠɪᴢ+ᴢᴇʀ+🪄_"
+             }
+        // ADDED */ TO REMOVE LINK PREVIEW TYPE
+        viz.quoted = {
+            key: {
+                fromMe: false,
+                participant: "0@s.whatsapp.net",
+                remoteJid: "status@broadcast"
+            },
+           message: {
+		'contactMessage': {
+		'displayName': `${message.pushName}`, //ADD `${message.client.user.name}` TO DISPLAY CLIENT USER NAME.
+		'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;'${message.client.user.name}',;;;\nFN:'${message.client.user.name}',\nitem1.TEL;waid=${jidToNum(number)}\nitem1.X-ABLabel:WhatsApp\nEND:VCARD`,
+		'jpegThumbnail': await genThumbnail(thumbnail.buffer)
+                }
+            }
+        }
+     message.send(`0ཻུ۪۪ꦽꦼ̷⸙‹•══════════════♡᭄
+│       *「 𝗠𝗬 𝗜𝗡𝗧𝗥𝗢 」*
+│ *Name      :* ꪶadarshꫂ
+│ *Place       :* ᵏᵉʳᵃˡᵃ
+│ *Gender   :*  Male
+│ *Age          :* Undefined
+│ *Hobby     :* ᧁꪖꪑꫀ𝘳 🙂
+│ *Phone     :* ⁺⁹¹⁶²³⁸⁵⁹¹²⁹⁵
+│ *IG ID        :ft.adarshx
+│ *Status     :...........
+╰═════ꪶ ཻུ۪۪ꦽꦼ̷⸙ ━ ━ ━ ━ ꪶ ཻུ۪۪ꦽꦼ̷⸙`, ᴀᴅᴀʀꜱʜ)
+    }
+);
